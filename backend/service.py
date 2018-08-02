@@ -9,7 +9,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), './','helpers'))
 
 import database_client
   
-  
+
 def add(a, b):
     """Test function"""
     return a + b
