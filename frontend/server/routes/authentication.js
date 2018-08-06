@@ -80,7 +80,7 @@ function validateSignup(payload) {
     }
 
     return {
-        success: isFormValid,
+        success: isValid,
         message,
         errors
     };
