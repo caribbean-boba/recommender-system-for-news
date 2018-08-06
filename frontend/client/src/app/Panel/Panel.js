@@ -1,9 +1,10 @@
 import './Panel.css'
-
+import Auth from '../../auth/Authentication';
 import React from 'react'
 import Card from '../Card/Card'
 import _ from 'lodash'
 const BUFFER = 60;
+
 
 // const test =  [
 //     {'url':'http://us.cnn.com/2017/02/15/politics/andrew-puzder-failed-nomination/index.html',
@@ -68,12 +69,12 @@ class Panel extends React.Component{
     };
 
     loadNews(e) {
-        var myHeaders = new Headers();
-        myHeaders.append('cache', 'false');
-
         let request = new Request('http://localhost:3000/news', {
             method: 'GET',
-            headers: myHeaders,
+            headers:{
+                'cache': false,
+                'Authorization': 'bearer '+ Auth.getToken()
+            },
         });
 
         fetch(request).then(res => res.json()).then(news => {
