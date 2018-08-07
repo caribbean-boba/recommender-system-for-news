@@ -16,13 +16,14 @@ MESSAGE_QUEUE_URL = "amqp://pcmwjrjr:Ztb_W2cjJF5AJqyYTLzU0e5tzvcCxnd8@lion.rmq.c
 MESSAGE_QUEUE_NAME = 'scrape-news-task'
 NEWS_TIME_OUT_IN_SECONDS = 3600 * 24
 SLEEP_TIME_IN_SECONDS = 10
-
-NEWS_SOURCES = ['cnn']
+NEWS_SOURCES = 'cnn, bbc-news, bbc-sport, bloomberg,cnn, entertainment-weekly,espn, the-new-york-times,techcrunch, the-washington-post,the-wall-street-journal, espn'
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT)
 message_client = MessageClient(MESSAGE_QUEUE_URL, MESSAGE_QUEUE_NAME)
 
 while True:
     news_list = newsapi_client.getNews(NEWS_SOURCES)
+    print NEWS_SOURCES
+    print news_list
     count_new_news = 0
     for news in news_list:
         news_digest = hashlib.sha256(news['title'].encode('UTF-8')).digest().encode('base64')

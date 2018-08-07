@@ -4,9 +4,11 @@ ENDPOINT = 'https://newsapi.org/v2/'
 KEY = 'd650981e4c624bc6868d82a810f850af'
 SROURCE_LIST = ['cnn']
 
-def getNews(source = SROURCE_LIST, sortBy = 'top'):
+def getNews(sources = SROURCE_LIST, sortBy = 'top'):
+    print sources
+    sources = sources.split(',')
     results = []
-    for source in SROURCE_LIST:
+    for source in sources:
         payload = {'apiKey': KEY, 'sources': source}
         res = requests.get(buildUrl(), params = payload)
         # print res['articles']
