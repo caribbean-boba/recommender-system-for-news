@@ -1,4 +1,4 @@
 {
     "mongoDbUri": "mongodb://yanhan:lyh19970409@ds113732.mlab.com:13732/news",
-    "jwtSecret": "a secret phrase!!"
+    "jwtSecret": "1a2b3c!!"
   }
