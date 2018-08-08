@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { Link } from 'react-router'
 import './Signup.css';
 const Signup = ({
   onSubmit,
@@ -34,7 +35,7 @@ user, }) => (
           <input type="submit" className="btn btn-primary" value='Sign Up'/>
         </div>
         <div className="row">
-          <p className="right-align"> Have an account? <a href="/login">Login</a></p>
+          <p className="right-align"> Have an account? <Link to="/login">Login</Link></p>
 </div>
 </form>
        </div>

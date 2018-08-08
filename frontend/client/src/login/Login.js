@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import './Login.css';
+import { Link } from 'react-router'
 const Login = ({
   onSubmit,
   onChange,
@@ -29,7 +30,7 @@ const Login = ({
           <input type="submit" className="btn btn-primary" value='Log in'/>
         </div>
         <div className="row center-align">
-          <p className="right-align"> Not have account yet?  <a href="/signup">Sign Up</a></p>
+          <p className="right-align"> Not have account yet?  <Link to="/signup">Sign Up</Link></p>
         </div>
       </form>
     </div>

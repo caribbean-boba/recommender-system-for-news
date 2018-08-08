@@ -54,14 +54,16 @@ class Panel extends React.Component{
     constructor(){
         super();
         this.state = {
-            availableNews: null
+            availableNews: null,
+            page: 1,
+            loadAllNews: false
         };
-        console.log('hi');
+        // console.log('hi');
         this.scrollHandler = this.scrollHandler.bind(this);
     };
 
     componentDidMount() {
-        console.log('hi');
+        // console.log('hi');
         this.loadNews();
         this.loadNews = _.debounce(this.loadNews, 500);
         console.log(this.state.availableNews);
@@ -69,7 +71,25 @@ class Panel extends React.Component{
     };
 
     loadNews(e) {
-        let request = new Request('http://localhost:3000/news', {
+        if (this.state.loadAllNews === true) {
+            return;
+        }
+        let url = "http://localhost:3000/news/userId/"+Auth.getEmail()+"/page/"+this.state.page
+
+        // let request = new Request(encodeURI(url), {
+        //     method: 'GET',
+        //     headers:{
+        //         'cache': false,
+        //         'Authorization': 'bearer '+ Auth.getToken()
+        //     },
+        // });
+
+        // fetch(request).then(res => res.json()).then(news => {
+        //     this.setState({
+        //         availableNews: this.state.availableNews ? this.state.availableNews.concat(news): news,
+        //     });
+        // });
+        let request = new Request(url, {
             method: 'GET',
             headers:{
                 'cache': false,
@@ -77,11 +97,32 @@ class Panel extends React.Component{
             },
         });
 
-        fetch(request).then(res => res.json()).then(news => {
-            this.setState({
-                availableNews: this.state.availableNews ? this.state.availableNews.concat(news): news,
-            });
-        });
+        fetch(request)
+        .then(res => res.json())
+        .then(fetched_news_list => {
+        if (!fetched_news_list || fetched_news_list.length == 0) {
+          this.setState({loadAllNews:true});
+        } else {
+            //console.log(typeof fetched_news_list)
+          this.setState({
+              availableNews: this.state.availableNews ? this.state.availableNews.concat(fetched_news_list) : fetched_news_list,
+              page: this.state.page + 1,
+          });
+        }
+      });
+        // }).then(news => {
+        //     console.log("news here")
+        //     console.log(news)
+        //     if(!news || news.length == 0){
+        //         console.log("news here")
+        //         console.log(news)
+        //         this.setState({loadAllNews:true});
+        //         this.setState({
+        //             availableNews: this.state.availableNews ? this.state.availableNews.concat(news) : news,
+        //             page: this.state.page + 1
+        //         });
+        //     }
+        // });
     }
     scrollHandler(){
         var y = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
@@ -93,8 +134,11 @@ class Panel extends React.Component{
 
     renderNews() {
         let newsList = this.state.availableNews.map(function(news) {
+            // news = JSON.stringify(news)
+            // console.log(news.description)
+            // console.log(typeof news)
             return (
-                <a className='list-group-item' key={news.digest} href='#'>
+                <a className='list-group-item' href='#'>
                     <Card news={news}/>
                 </a>
             );
