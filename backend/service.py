@@ -19,6 +19,9 @@ def getNewsSummariesForUser(user_id, page_num):
     print("get_news_summaries_for_user is called with %s and %s" % (user_id, page_num))
     return operations.getNewsSummariesForUser(user_id, page_num)
 
+def recordClickLogForUser(user_id, news_id):
+    print("get Logs for user")
+    return operations.recordClickLogForUser(user_id, news_id)
 
 
 class RequestHandler(pyjsonrpc.HttpRequestHandler):
@@ -26,6 +29,7 @@ class RequestHandler(pyjsonrpc.HttpRequestHandler):
     methods = dict(
         add = add,
         getNewsSummariesForUser = getNewsSummariesForUser,
+        recordClickLogForUser = recordClickLogForUser
     )
 
 # Threading HTTP-Server

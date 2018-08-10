@@ -1,11 +1,37 @@
 import './Card.css'
+import Auth from '../../auth/Authentication'
 
 import React from 'react';
 
 class Card extends React.Component{
+    sendClick() {
+        // console.log('I clicked here');
+        // let url = 'http://localhost:3000/news/userId/' + Auth.getEmail() + "/newsId/" + this.props.news.digest;
+        // console.log(url);
+        let url = `http://localhost:3000/news/userId/${Auth.getEmail()}'/newsId/${this.props.news.digest}`;
+
+    let request = new Request(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'bearer ' + Auth.getToken(),
+        'cache': false
+      },
+    });
+
+    console.log(this.props.news.digest)
+    console.log(this.props.news.title)
+    console.log(url)
+
+    console.log('bearer ' + Auth.getToken());
+
+    fetch(request).then(data => console.log(data));
+    }
     render() {
         return (
-            <div className='news-container' onClick={() =>  window.open(this.props.news.url, '_blank') }>
+            <div className='news-container' onClick={() =>  {
+                    window.open(this.props.news.url, '_blank')
+                    this.sendClick()
+                } }>
             <div className='row'>
                 <div className='col s4 fill'>
                     <img src={this.props.news.urlToImage} alt='news' />

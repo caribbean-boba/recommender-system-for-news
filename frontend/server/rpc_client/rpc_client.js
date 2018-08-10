@@ -22,7 +22,19 @@ function getNewsSummariesForUser(user_id, page, cb){
     });
 }
 
+function recordClickLogForUser(user_id, news_id) {
+    console.log('recordClickLogForUser');
+    client.request('recordClickLogForUser', [user_id, news_id], function (err, error, res){
+        if (err) throw err;
+        // console.log(user_id)
+        // console.log(page)
+        console.log(res)
+    });
+
+}
+
 module.exports = {
     add: add,
-    getNewsSummariesForUser: getNewsSummariesForUser
+    getNewsSummariesForUser: getNewsSummariesForUser,
+    recordClickLogForUser: recordClickLogForUser
 }

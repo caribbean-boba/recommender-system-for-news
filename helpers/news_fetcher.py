@@ -18,6 +18,7 @@ scrape_client = MessageClient(SCRAPE_QUEUE_URL, SCRAPE_QUEUE_NAME)
 
 
 def process_message(msg):
+    """Process message and scrape. If you want to use my scraper, use the commentted part"""
     task = msg
     text = None
     # print task['url']

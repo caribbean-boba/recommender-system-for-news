@@ -7,6 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 import database_client as db_client
 from message_client import MessageClient
+import model_server_client as model_client
 
 DEDUPE_QUEUE_URL = "amqp://lqtrezfw:6JwRwmAPuMAMLdCnsCTrhVjO0W799DjK@lion.rmq.cloudamqp.com/lqtrezfw"
 DEDUPT_QUEUE_NAME = "dedup-news-task"
@@ -44,6 +45,9 @@ def process_message(msg):
                 print("Ignore duplicated news")
                 return
     task['publishedAt'] = parser.parse(task['publishedAt'])
+    if task['title'] is not None:
+        task['class'] = model_client.classify(task['description'])
+        # print ("task class %s" % task["class"])
 
     db[NEWS_TABLE_NAME].replace_one({'digest': task['digest']}, task, upsert=True)
 

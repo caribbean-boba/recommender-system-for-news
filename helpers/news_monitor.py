@@ -25,7 +25,7 @@ while True:
     count_new_news = 0
     for news in news_list:
         # user sha256 to generate digest
-        news_digest = hashlib.sha256(news['title'].encode('UTF-8')).digest().encode('base64')
+        news_digest = hashlib.sha256(news['title'].encode('UTF-8')).digest().encode('base64').replace("\n", "")
         if redis_client.get(news_digest) is None:
             news['digest'] = news_digest
             count_new_news += 1

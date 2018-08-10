@@ -74,21 +74,7 @@ class Panel extends React.Component{
         if (this.state.loadAllNews === true) {
             return;
         }
-        let url = "http://localhost:3000/news/userId/"+Auth.getEmail()+"/page/"+this.state.page
-
-        // let request = new Request(encodeURI(url), {
-        //     method: 'GET',
-        //     headers:{
-        //         'cache': false,
-        //         'Authorization': 'bearer '+ Auth.getToken()
-        //     },
-        // });
-
-        // fetch(request).then(res => res.json()).then(news => {
-        //     this.setState({
-        //         availableNews: this.state.availableNews ? this.state.availableNews.concat(news): news,
-        //     });
-        // });
+        let url = `http://localhost:3000/news/userId/${Auth.getEmail()}/page/${this.state.page}`
         let request = new Request(url, {
             method: 'GET',
             headers:{
@@ -99,30 +85,17 @@ class Panel extends React.Component{
 
         fetch(request)
         .then(res => res.json())
-        .then(fetched_news_list => {
-        if (!fetched_news_list || fetched_news_list.length == 0) {
+        .then(news_list => {
+        if (!news_list || news_list.length == 0) {
           this.setState({loadAllNews:true});
         } else {
-            //console.log(typeof fetched_news_list)
+          console.log(news_list)
           this.setState({
-              availableNews: this.state.availableNews ? this.state.availableNews.concat(fetched_news_list) : fetched_news_list,
+              availableNews: this.state.availableNews ? this.state.availableNews.concat(news_list) : news_list,
               page: this.state.page + 1,
           });
         }
       });
-        // }).then(news => {
-        //     console.log("news here")
-        //     console.log(news)
-        //     if(!news || news.length == 0){
-        //         console.log("news here")
-        //         console.log(news)
-        //         this.setState({loadAllNews:true});
-        //         this.setState({
-        //             availableNews: this.state.availableNews ? this.state.availableNews.concat(news) : news,
-        //             page: this.state.page + 1
-        //         });
-        //     }
-        // });
     }
     scrollHandler(){
         var y = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;

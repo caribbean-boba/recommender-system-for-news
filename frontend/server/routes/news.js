@@ -63,9 +63,20 @@ router.get('/userId/:userId/page/:page', function(req, res, next) {
   page_num = req.params['page'];
 
   rpc_client.getNewsSummariesForUser(user_id, page_num, function(response) {
-    // console.log(response)
+    console.log('response');
+    console.log(response)
     res.json(response);
   });
+});
+
+router.post('/userId/:userId/newsId/:newsId', function(req, res, next) {
+  console.log('reach here log!!!!');
+  user_id = req.params['userId'];
+  news_id = req.params['newsId'];
+  console.log(news_id);
+
+  rpc_client.recordClickLogForUser(user_id, news_id);
+  res.json('success');
 });
 
 
